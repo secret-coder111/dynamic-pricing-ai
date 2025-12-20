@@ -1,33 +1,50 @@
 import random
 
+
 class Customer:
-    def __init__(self , customer_type):
-        self.customer_type = customer_type
-        self.willingness_to_pay = self.set_willingness()
-    
-    def set_willingness(self):
-          """
-        Defines how much a customer is willing to pay
-        based on their segment.
+    """
+    Represents a single customer with a price sensitivity profile.
+    """
+
+    SEGMENTS = {
+        "price_sensitive": (300, 450),
+        "normal": (400, 600),
+        "premium": (550, 800)
+    }
+
+    def __init__(self, segment: str, seed: int | None = None):
         """
-          if self.customer_type == "price_sensitive":
-               return random.uniform(300,450)
-          elif self.customer_type == "normal":
-               return random.uniform(400,600)
-          elif self.customer_type == "premimum":
-               return random.uniform(550,800)
-          else:
-               return random.uniform(400,600)
-    
-    def will_buy(self , price):
-        #determine whether the customerwill buy at given price
-        return price <=self.willingness_to_pay
-    
+        Initialize a customer with a given segment.
 
-if __name__ == "__main__":
-     customer = Customer("price_sensitive")
-     print("Willingness to pay:", customer.willingness_to_pay)
-     print("Will buy at $400:", customer.will_buy(500))
+        Args:
+            segment (str): Customer segment type
+            seed (int, optional): Random seed for reproducibility
+        """
+        if segment not in self.SEGMENTS:
+            raise ValueError(f"Unknown customer segment: {segment}")
 
+        if seed is not None:
+            random.seed(seed)
 
+        self.segment = segment
+        self.min_price, self.max_price = self.SEGMENTS[segment]
+        self.willingness_to_pay = random.uniform(self.min_price, self.max_price)
 
+    def purchase_probability(self, price: float) -> float:
+        """
+        Returns probability of purchase at a given price.
+
+        Instead of a hard yes/no decision, we model
+        realistic probabilistic buying behavior.
+        """
+        if price >= self.willingness_to_pay:
+            return 0.0
+
+        sensitivity = (self.willingness_to_pay - price) / self.willingness_to_pay
+        return min(1.0, sensitivity)
+
+    def will_buy(self, price: float) -> bool:
+        """
+        Stochastic purchase decision based on probability.
+        """
+        return random.random() < self.purchase_probability(price)
