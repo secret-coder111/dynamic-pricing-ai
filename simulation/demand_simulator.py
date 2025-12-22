@@ -1,5 +1,6 @@
 import random
-from customer_model import Customer
+from simulation.customer_model import Customer
+
 
 
 class DemandSimulator:
