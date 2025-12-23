@@ -8,6 +8,7 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error
+from joblib import dump
 
 
 def evaluate_model(name, y_true, y_pred):
@@ -75,6 +76,7 @@ def train_demand_models(
     # Visualization
     # -----------------------------
     price_range = np.linspace(X.min(), X.max(), 100).reshape(-1, 1)
+    dump(rf_model, "models/demand/rf_demand_model.joblib")
 
     plt.figure(figsize=(10, 6))
     plt.scatter(X, y, label="True Demand", color="black", alpha=0.6)
