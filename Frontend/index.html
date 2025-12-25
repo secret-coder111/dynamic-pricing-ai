@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Dynamic Pricing Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<h1>AI Dynamic Pricing Dashboard</h1>
+<p class="subtitle">
+    Predict demand and optimize prices using ML & Reinforcement Learning
+</p>
+
+<!-- ACTION CARDS -->
+<div class="dashboard actions">
+
+    <div class="card">
+        <h2>Demand Prediction</h2>
+        <input type="number" id="price-input" placeholder="Enter price">
+        <button id="predict-btn">Predict Demand</button>
+        <p id="demand-output"></p>
+    </div>
+
+    <div class="card">
+        <h2>ML Static Pricing</h2>
+        <button id="static-btn">Get Optimal Price</button>
+        <p id="static-output"></p>
+    </div>
+
+    <div class="card">
+        <h2>RL Dynamic Pricing</h2>
+        <button id="rl-btn">Get RL Price</button>
+        <p id="rl-output"></p>
+    </div>
+
+    <div class="card">
+        <h2>Upload CSV & Retrain</h2>
+        <input type="file" id="csv-file" accept=".csv">
+        <button id="upload-btn">Upload & Retrain</button>
+        <p id="upload-status"></p>
+    </div>
+
+</div>
+
+<!-- PRICE COMPARISON -->
+<div class="dashboard comparison">
+    <div class="card wide highlight">
+        <h2>ML vs RL Price Comparison</h2>
+        <canvas id="priceComparisonChart"></canvas>
+    </div>
+</div>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
